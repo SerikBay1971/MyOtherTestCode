@@ -9,30 +9,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class HackScreen {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, AWTException, InterruptedException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String nowFormat;
         boolean infinity = true;
 
         while (infinity) {
-            BufferedImage image = null;
-            try {
-                image = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-            } catch (AWTException e) {
-                e.printStackTrace();
-            }
+            Thread.sleep(15 * 60 * 1000); // каждые 15 минут
+            BufferedImage image = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
             Date now = new Date();
             nowFormat = "d:/ScreenFiles/" + formatter.format(now) + ".png";
-            try {
-                ImageIO.write(image, "png", new File(nowFormat));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                Thread.sleep(15 * 1000); // каждые 15 секунд
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            ImageIO.write(image, "png", new File(nowFormat));
         }
     }
 }
